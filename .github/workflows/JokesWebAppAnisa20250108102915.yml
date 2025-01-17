@@ -45,6 +45,13 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.JokesWebAppAnisa20250108102915_SPN }}
+    # Step: Clean the Azure App Service (new cleanup step)
+    - name: Clean Azure App Service
+      run: |
+        az webapp config appsettings set \
+          --name 'JokesWebAppAnisa20250108102915' \
+          --resource-group 'JokesWebAppAnisa20250107144328ResourceGroup' \
+          --settings SCM_DO_FULL_BUILD=true
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
