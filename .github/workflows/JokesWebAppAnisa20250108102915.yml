@@ -49,9 +49,14 @@ jobs:
     - name: Clean Azure App Service
       run: |
         az webapp config appsettings set \
-          --name 'JokesWebAppAnisa20250108102915' \
-          --resource-group 'JokesWebAppAnisa20250107144328ResourceGroup' \
+          --name ${{ secrets.AZURE_APP_NAME }} \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
           --settings SCM_DO_FULL_BUILD=true
+      env:
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}   
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
